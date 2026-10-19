@@ -1,0 +1,30 @@
+╰─ docker container ls -a                                                                                                                                                       ─╯
+CONTAINER ID   IMAGE         COMMAND    CREATED       STATUS                   PORTS     NAMES
+89cc22150e9e   ubuntu        "bash"     2 hours ago   Up 19 minutes                      jovial_lichterman
+d949495ba268   hello-world   "/hello"   2 hours ago   Exited (0) 2 hours ago             great_goodall
+
+docker kill jovial_lichterman                                                                                                                                                ─╯
+jovial_lichterman
+
+root@89cc22150e9e:/# apt-get update
+Hit:1 http://ports.ubuntu.com/ubuntu-ports resolute InRelease
+Hit:2 http://ports.ubuntu.com/ubuntu-ports resolute-updates InRelease
+Hit:3 http://ports.ubuntu.com/ubuntu-ports resolute-backports InRelease
+Hit:4 http://ports.ubuntu.com/ubuntu-ports resolute-security InRelease
+Reading package lists... Done
+
+root@89cc22150e9e:/# apt-get -y install nano
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+nano is already the newest version (8.7.1-1ubuntu0.1).
+Solving dependencies... Done
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+root@89cc22150e9e:/# 
+
+root@89cc22150e9e:/# cd usr/src/app/
+root@89cc22150e9e:/usr/src/app# ls
+index.js
+root@89cc22150e9e:/usr/src/app# cat index.js
+console.log("Hello World");
+root@89cc22150e9e:/usr/src/app# 
