@@ -1,0 +1,124 @@
+ ✔ Container todo-backend-app-1 Created                                                                                                                                        0.0s
+Attaching to app-1
+app-1  | 
+app-1  | > todo-express-backend@0.0.0 start
+app-1  | > node ./bin/www
+app-1  | 
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                   ✔  6s  21:53:44 ─╮
+╰─ docker ls                                                                                                                                                                    ─╯
+docker: unknown command: docker ls
+
+Run 'docker --help' for more information
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                      1 ✘  21:53:50 ─╮
+╰─ docker container ls                                                                                                                                                          ─╯
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+047e752a19c0   todo-backend   "docker-entrypoint.s…"   15 seconds ago   Up 15 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   todo-backend-app-1
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                        ✔  21:53:54 ─╮
+╰─ docker compose down                                                                                                                                                          ─╯
+[+] down 2/2
+ ✔ Container todo-backend-app-1 Removed                                                                                                                                        0.6s
+ ✔ Network todo-backend_default Removed                                                                                                                                        0.1s
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                        ✔  21:54:31 ─╮
+╰─ clear                                                                                                                                                                        ─╯
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                        ✔  21:54:32 ─╮
+╰─ docker container ls -a                                                                                                                                                       ─╯
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                       PORTS     NAMES
+3729acb8c9ad   nginx     "/docker-entrypoint.…"   39 minutes ago   Exited (137) 3 minutes ago             hardcore_sutherland
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                        ✔  21:54:35 ─╮
+╰─ docker compose -f docker-compose.dev.yml up -d                                                                                                                               ─╯
+[+] up 2/2
+ ✔ Network todo-backend_default   Created                                                                                                                                      0.0s
+ ✔ Container todo-backend-mongo-1 Started                                                                                                                                      0.1s
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                        ✔  21:55:00 ─╮
+╰─ docker container ls -a                                                                                                                                                       ─╯
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                       PORTS                                           NAMES
+c88061e204c8   mongo     "docker-entrypoint.s…"   7 seconds ago    Up 7 seconds                 0.0.0.0:3456->27017/tcp, [::]:3456->27017/tcp   todo-backend-mongo-1
+3729acb8c9ad   nginx     "/docker-entrypoint.…"   40 minutes ago   Exited (137) 3 minutes ago                                                   hardcore_sutherland
+
+╭─ ~/Doc/1. Coding/Major Project/FullStackOpen-Containers/todo-app/todo-backend  main ?2                                                                        ✔  21:55:07 ─╮
+╰─ docker exec -it todo-backend-mongo-1 bash                                                                                                                                    ─╯
+root@c88061e204c8:/# ls
+bin  boot  data  dev  docker-entrypoint-initdb.d  etc  home  js-yaml.js  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@c88061e204c8:/# mongosh
+Current Mongosh Log ID: 6ada394c718009ac2a39b931
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.13.0
+Using MongoDB:          undefined
+Using Mongosh:          2.13.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, pseudo-anonymous usage data is collected from interactive and agentic sessions only, and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+test> 
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+test> 
+root@c88061e204c8:/# mongosh -u root -p example
+Current Mongosh Log ID: 6ada398e7526e1fe7b1b3087
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.13.0
+Using MongoDB:          9.0.4
+Using Mongosh:          2.13.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-10-22T16:25:00.186+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2026-10-22T16:25:00.309+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2026-10-22T16:25:00.309+00:00: We suggest setting the contents of sysfsFile to 0.
+   2026-10-22T16:25:00.309+00:00: We suggest setting swappiness to 0 or 1, as swapping can cause performance problems.
+------
+
+test> show dbs
+admin         100.00 KiB
+config         36.00 KiB
+local          76.00 KiB
+the_database   40.00 KiB
+test> use the_database
+switched to db the_database
+the_database> show collections
+todos
+the_database> db.todos.find({})
+[
+  {
+    _id: ObjectId('6ada16019f14722ffe9c5b5e'),
+    text: 'Write code',
+    done: true
+  },
+  {
+    _id: ObjectId('6ada16019f14722ffe9c5b5f'),
+    text: 'Learn about containers',
+    done: false
+  }
+]
+the_database> db.todos.insertOne({ text: "Increase the number of tools in my tool belt", done: false })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6ada3a907526e1fe7b1b3088')
+}
+the_database> db.todos.find({})
+[
+  {
+    _id: ObjectId('6ada16019f14722ffe9c5b5e'),
+    text: 'Write code',
+    done: true
+  },
+  {
+    _id: ObjectId('6ada16019f14722ffe9c5b5f'),
+    text: 'Learn about containers',
+    done: false
+  },
+  {
+    _id: ObjectId('6ada3a907526e1fe7b1b3088'),
+    text: 'Increase the number of tools in my tool belt',
+    done: false
+  }
+]
+the_database> 
