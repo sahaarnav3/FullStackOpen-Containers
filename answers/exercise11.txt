@@ -1,0 +1,73 @@
+no changes added to commit (use "git add" and/or "git commit -a")
+
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main !3                                                                                        ✔  23:55:43 ─╮
+╰─ git add .                                                                                                                                                                    ─╯
+
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main +3                                                                                        ✔  23:55:52 ─╮
+╰─ git commit -m "Done till exercise 10"                                                                                                                                        ─╯
+[main c36aec3] Done till exercise 10
+ 3 files changed, 18 insertions(+), 3 deletions(-)
+
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main ⇡1                                                                                        ✔  23:56:03 ─╮
+╰─ git push                                                                                                                                                                     ─╯
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
+Delta compression using up to 14 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 1.03 KiB | 1.03 MiB/s, done.
+Total 8 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/sahaarnav3/FullStackOpen-Containers.git
+   11417e1..c36aec3  main -> main
+
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main                                                                                      ✔  3s  23:56:08 ─╮
+╰─ clear                                                                                                                                                                        ─╯
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main ?1                                                                                        ✔  23:58:12 ─╮
+╰─ docker container ls                                                                                                                                                          ─╯
+CONTAINER ID   IMAGE          COMMAND                  CREATED             STATUS             PORTS                                           NAMES
+d480c2ec28c7   redis:latest   "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp     todo-backend-redis-1
+880ab477baaa   mongo          "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:3456->27017/tcp, [::]:3456->27017/tcp   todo-backend-mongo-1
+
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main ?1                                                                                        ✔  23:58:16 ─╮
+╰─ docker exec -it todo-backend-redis-1 bash                                                                                                                                    ─╯
+root@d480c2ec28c7:/data# ls
+dump.rdb
+root@d480c2ec28c7:/data# cd ..
+root@d480c2ec28c7:/# ls
+bin  boot  data  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@d480c2ec28c7:/# exit
+exit
+
+What's next:
+    Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug todo-backend-redis-1
+    Learn more at https://docs.docker.com/go/debug-cli/
+
+╭─ ~/Documents/1. Coding/Major Project/FullStackOpen-Containers  main ?1                                                                                  ✔  47s  00:01:15 ─╮
+╰─ docker exec -it todo-backend-redis-1 redis-cli                                                                                                                               ─╯
+127.0.0.1:6379> PING
+PONG
+127.0.0.1:6379> KEYS pattern 
+(empty array)
+127.0.0.1:6379> KEYS
+(error) ERR wrong number of arguments for 'keys' command
+127.0.0.1:6379> KEYS added_todos
+1) "added_todos"
+127.0.0.1:6379> KEYS pattern
+(empty array)
+127.0.0.1:6379> KEYS added_todos
+1) "added_todos"
+127.0.0.1:6379> GET added_todos
+"3"
+127.0.0.1:6379> SET added_todos 9001
+OK
+127.0.0.1:6379> GET added_todos
+"9001"
+127.0.0.1:6379> DEL added_todos
+(integer) 1
+127.0.0.1:6379> GET added_todos
+(nil)
+127.0.0.1:6379> GET added_todos
+(nil)
+127.0.0.1:6379> GET added_todos
+"3"
+127.0.0.1:6379> 

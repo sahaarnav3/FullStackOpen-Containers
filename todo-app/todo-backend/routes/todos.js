@@ -6,6 +6,7 @@ const redis = require('../redis');
 /* GET todos listing. */
 router.get('/', async (_, res) => {
   const todos = await Todo.find({})
+  redis.set("added_todos", todos.length);
   res.send(todos);
 });
 
