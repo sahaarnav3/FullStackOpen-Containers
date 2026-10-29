@@ -1,0 +1,24 @@
+services:
+  app:
+    image: todo-front-dev
+    build: 
+      context: ./todo-frontend
+      dockerfile: dev.Dockerfile
+    volumes: 
+      - ./todo-frontend:/usr/src/app
+    # ports: 
+    #   - 5173:5173 # Not needed since traffic is routed through nginx now
+    container_name: todo-front-dev
+  
+  debug-helper:
+    image: busybox
+
+  nginx:
+    image: nginx:1.29
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app # wait for the frontend container to be started
