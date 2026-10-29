@@ -1,7 +1,7 @@
 # Base Stage - Installing Dependencies
 FROM node AS base-stage
 WORKDIR /usr/src/app
-COPY . .
+COPY package*.json ./
 RUN npm ci
 
 # Test Stage
@@ -11,7 +11,7 @@ RUN npm test
 
 # Build Stage
 FROM test-stage AS build-stage
-ENV VITE_BACKEND_URL="http://127.0.0.1:3000/"
+ENV VITE_BACKEND_URL=/api
 RUN npm run build
 
 # Final 
