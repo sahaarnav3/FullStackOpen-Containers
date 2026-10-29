@@ -50,8 +50,8 @@ singleRouter.put('/', async (req, res) => {
   const updated = await Todo.findByIdAndUpdate(req.todo._id, {
     text: req.body.text,
     done: req.body.done
-  })
-  if (updated) res.sendStatus(200);
+  }, {new: true})
+  if (updated) res.status(200).json(updated);
   else res.sendStatus(400);
 });
 
